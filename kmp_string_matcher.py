@@ -25,18 +25,18 @@ def kmp_search(text, pattern):
     if len(pattern) > len(text):
         return ["Pattern is longer than text"]
 
-    Text_length = len(text)
+    text_length = len(text)
     pattern_length = len(pattern)
 
     if pattern_length == 1:
-        return [i for i in range(Text_length) if text[i] == pattern[0]]
+        return [i for i in range(text_length) if text[i] == pattern[0]]
 
     lps = compute_lps_array(pattern)
     result = []
     i = 0
     j = 0
 
-    while i < Text_length:
+    while i < text_length:
         if pattern[j] == text[i]:
             i += 1
             j += 1
@@ -44,7 +44,7 @@ def kmp_search(text, pattern):
         if j == pattern_length:
             result.append(i - j)
             j = lps[j - 1]
-        elif i < Text_length and pattern[j] != text[i]:
+        elif i < text_length and pattern[j] != text[i]:
             if j != 0:
                 j = lps[j - 1]
             else:
@@ -53,22 +53,22 @@ def kmp_search(text, pattern):
     return result
 
 if __name__ == "__main__":
-    print("-" * 60)
+    print()
     print("KMP String Matching Algorithm Test")
-    print("-" * 60)
+    print()
 
-    text = "ABABDABACDABABCABAB"
-    pattern = "ABABCABAB"
+    text = input("Enter the text string: ").strip()
+    pattern = input("Enter the pattern string: ").strip()
 
-    print(f"Text string  : {text}")
-    print(f"Pattern      : {pattern}")
-    print("-" * 60)
-    print("Time Complexity: O(Text_length+m) where Text_length is text length and m is pattern length")
-    print("-" * 60)
+    print()
+    print(f"Time Complexity: O({len(text)} + {len(pattern)}) = O({len(text) + len(pattern)})")
+    print()
 
     positions = kmp_search(text, pattern)
 
-    if positions:
+    if isinstance(positions, list) and isinstance(positions[0], str):
+        print(positions[0])
+    elif positions:
         print(f"Pattern found at positions: {positions}")
         for pos in positions:
             print(f"Text  : {text}")
@@ -76,4 +76,4 @@ if __name__ == "__main__":
     else:
         print("Pattern not found in the text")
 
-    print("-" * 60)
+    print()
